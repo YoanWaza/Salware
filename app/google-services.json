@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "86602164184",
+    "project_id": "bchat-6741e",
+    "storage_bucket": "bchat-6741e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:86602164184:android:45f29bee67884022d174ad",
+        "android_client_info": {
+          "package_name": "com.test.demibluetoothchatting"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyChN2euv9bijN10leGKrDPlLk5QhcsyhOQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
