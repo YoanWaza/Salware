@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "86602164184",
-    "project_id": "bchat-6741e",
-    "storage_bucket": "bchat-6741e.appspot.com"
+    "project_number": "281155017086",
+    "project_id": "salware-d10d8",
+    "storage_bucket": "salware-d10d8.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:86602164184:android:45f29bee67884022d174ad",
+        "mobilesdk_app_id": "1:281155017086:android:211117c6300f985e763b2f",
         "android_client_info": {
           "package_name": "com.test.demibluetoothchatting"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyChN2euv9bijN10leGKrDPlLk5QhcsyhOQ"
+          "current_key": "AIzaSyDiqQYA5PRfr3z7jDDxeFOJ8ZNkT-0TDuU"
         }
       ],
       "services": {
