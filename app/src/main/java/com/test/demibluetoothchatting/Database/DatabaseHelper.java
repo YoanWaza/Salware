@@ -37,14 +37,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     // Constructor for initializing the database helper with the context and database name
     public DatabaseHelper(Context context) {
-        super(context, DATABASE_NAME, null, 3);
+        super(context, DATABASE_NAME, null, 4);
     }
 
     // onCreate is called when the database is created for the first time
     @Override
     public void onCreate(SQLiteDatabase db) {
         // Create users table
-        db.execSQL("CREATE TABLE " + USER_TABLE_NAME + " (ID INTEGER PRIMARY KEY AUTOINCREMENT, FULLNAME TEXT, USERNAME TEXT, PASSWORD TEXT)");
+        db.execSQL("CREATE TABLE " + USER_TABLE_NAME + " (ID INTEGER PRIMARY KEY AUTOINCREMENT, FULLNAME TEXT, USERNAME TEXT, PASSWORD TEXT, USERTYPE TEXT)");
         // Create messages table
         db.execSQL("CREATE TABLE " + MESSAGE_TABLE_NAME + " (ID INTEGER PRIMARY KEY AUTOINCREMENT, SENDER TEXT, RECEIVER TEXT, MESSAGE TEXT, TIMESTAMP DATETIME DEFAULT CURRENT_TIMESTAMP, SYNCED INTEGER DEFAULT 0)");
     }
@@ -55,6 +55,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         // Drop old tables if they exist and recreate them
         db.execSQL("DROP TABLE IF EXISTS " + USER_TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS " + MESSAGE_TABLE_NAME);
+        if (oldVersion < 4) { // Assume the new version is 4
+            db.execSQL("ALTER TABLE " + USER_TABLE_NAME + " ADD COLUMN USERTYPE TEXT");
+        }
         onCreate(db); // Recreate the database tables
     }
 
@@ -140,13 +143,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     // Insert a new user into the users table
-    public boolean insertUser(String fullname, String username, String password) {
+    public boolean insertUser(String fullname, String username, String password, String userType) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         // Set values for user details
         contentValues.put(USER_COL_2, fullname);
         contentValues.put(USER_COL_3, username);
         contentValues.put(USER_COL_4, password);
+        contentValues.put("USERTYPE", userType);
 
         long result = db.insert(USER_TABLE_NAME, null, contentValues);
         return result != -1; // Return true if insertion was successful, false otherwise
@@ -191,9 +195,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 String fullName = cursor.getString(cursor.getColumnIndex(USER_COL_2));
                 String username = cursor.getString(cursor.getColumnIndex(USER_COL_3));
                 String password = cursor.getString(cursor.getColumnIndex(USER_COL_4));
+                String userType = cursor.getString(cursor.getColumnIndex("USERTYPE"));
 
                 // Create a new User object with the retrieved data
-                user = new User(userId, fullName, username, password);
+                user = new User(userId, fullName, username, password, userType);
             }
         } catch (Exception e) {
             e.printStackTrace(); // Log any exceptions

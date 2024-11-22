@@ -6,11 +6,14 @@ public class User {
     private String username;
     private String password;
 
-    public User(int id, String fullName, String username, String password) {
+    private String userType;
+
+    public User(int id, String fullName, String username, String password, String userType) {
         this.id = id;
         this.fullName = fullName;
         this.username = username;
         this.password = password;
+        this.userType = userType;
     }
 
     public int getId() {
@@ -28,5 +31,7 @@ public class User {
     public String getPassword() {
         return password;
     }
+
+    public String getUserType() { return userType; }
 }
 
