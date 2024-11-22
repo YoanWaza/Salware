@@ -87,7 +87,32 @@ public class SyncService extends Service {
     }
 
     // Method to save the device's location to Firebase after syncing the message
+//    private void saveDeviceLocationToFirebase(String chatNode, String deviceAddress, String latitude, String longitude) {
+//        // Reference to the "locations" node in Firebase under the specific chat node
+//        DatabaseReference locationRef = firebaseDb.child(chatNode).child("locations").child(deviceAddress);
+//
+//        // Create a map containing the latitude and longitude values
+//        Map<String, Object> locationData = new HashMap<>();
+//        locationData.put("latitude", latitude);
+//        locationData.put("longitude", longitude);
+//
+//        // Update the location data in Firebase and log the result
+//        locationRef.updateChildren(locationData).addOnCompleteListener(task -> {
+//            if (task.isSuccessful()) {
+//                Log.d("SyncService", "Device location synced: " + latitude + ", " + longitude);
+//            } else {
+//                Log.d("SyncService", "Failed to sync device location");
+//            }
+//        });
+//    }
     private void saveDeviceLocationToFirebase(String chatNode, String deviceAddress, String latitude, String longitude) {
+        if (chatNode == null || deviceAddress == null || latitude == null || longitude == null) {
+            Log.e("SyncService", "Invalid parameters for saving device location: " +
+                    "chatNode=" + chatNode + ", deviceAddress=" + deviceAddress +
+                    ", latitude=" + latitude + ", longitude=" + longitude);
+            return; // Stop execution if any parameter is null
+        }
+
         // Reference to the "locations" node in Firebase under the specific chat node
         DatabaseReference locationRef = firebaseDb.child(chatNode).child("locations").child(deviceAddress);
 
@@ -105,6 +130,7 @@ public class SyncService extends Service {
             }
         });
     }
+
 
     // This method is required by the Service class, but we're returning null since we don't need binding
     @Override

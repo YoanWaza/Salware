@@ -11,6 +11,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -103,7 +104,12 @@ public class ChatFragment extends Fragment {
 
         // Handle Bluetooth unavailability
         if (bluetoothAdapter == null) {
-            Toast.makeText(getActivity(), "Bluetooth is not available!", Toast.LENGTH_SHORT).show();
+            if (getActivity() != null) {
+                Toast.makeText(getActivity(), "Bluetooth is not available!", Toast.LENGTH_SHORT).show();
+            } else {
+                Log.e("ChatFragment", "Activity is null. Cannot show Toast.");
+            }
+//            Toast.makeText(getActivity(), "Bluetooth is not available!", Toast.LENGTH_SHORT).show();
             if (getFragmentManager() != null) {
                 getFragmentManager().popBackStack();
             }
