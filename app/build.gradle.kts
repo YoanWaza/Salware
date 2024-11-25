@@ -1,6 +1,6 @@
 plugins {
     alias(libs.plugins.androidApplication)   // Alias for Android application plugin from version catalog
-    id("com.google.gms.google-services")  // Directly applying Google Services plugin
+    id("com.google.gms.google-services")    // Directly applying Google Services plugin
 }
 
 android {
@@ -42,4 +42,9 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
+
+    // Firebase and FirebaseUI dependencies
+    implementation("com.firebaseui:firebase-ui-database:8.0.1")
+    implementation("com.google.firebase:firebase-database:20.0.5")
 }
+

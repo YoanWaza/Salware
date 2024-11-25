@@ -57,12 +57,17 @@ public class SignupActivity extends AppCompatActivity {
                     // Insert the user details into the database
                     boolean isInserted = db.insertUser(fullname, username, password, userType);
 
+
                     // If the user is successfully inserted, show a success message
                     if (isInserted) {
                         Toast.makeText(SignupActivity.this, "Signup successful", Toast.LENGTH_SHORT).show();
                         // Redirect the user to the LoginActivity after successful signup
                         Intent intent = new Intent(SignupActivity.this, LoginActivity.class);
                         startActivity(intent);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
+                        finish(); // Close SignupActivity
+
                     } else {
                         // Show a failure message if user insertion failed
                         Toast.makeText(SignupActivity.this, "Signup failed", Toast.LENGTH_SHORT).show();

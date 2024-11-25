@@ -21,12 +21,13 @@
         android:label="@string/app_name"
         android:roundIcon="@drawable/icon"
         android:supportsRtl="false"
-
         android:theme="@style/Theme.DemiBluetoothChatting"
         tools:targetApi="31">
         <activity
             android:name=".ActivityDashboard"
             android:exported="false" />
+        <activity android:name=".RoomManagementActivity" />
+        <activity android:name=".ChatActivity" />
         <activity android:name=".MainActivity" />
         <activity
             android:name=".SignupActivity"

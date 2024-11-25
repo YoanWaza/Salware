@@ -71,6 +71,7 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         // Set a click listener for the login button
+        // Set a click listener for the login button
         buttonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -83,23 +84,42 @@ public class LoginActivity extends AppCompatActivity {
 
                 // If the user exists (valid userId), proceed with login
                 if (userId != -1) {
+                    // Fetch the user type from the database
+                    User user = db.getUserById(userId); // Ensure `getUserById` is implemented
+                    String userType = user.getUserType(); // Get the userType from the User object
+
                     Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
 
                     // Clear the input fields after successful login
                     editTextUsername.setText("");
                     editTextPassword.setText("");
 
-                    // Store the user ID using a helper class
+                    // Store the user ID and type using a helper class
                     Controller.PutData(LoginActivity.this, "uid", String.valueOf(userId));
+                    Controller.PutData(LoginActivity.this, "userType", userType);
 
-                    // Check Bluetooth status and enable it if not already enabled
-                    checkBluetoothStatus();
+                    // Redirect based on user type
+                    if (userType.equals("field")) {
+                        // Redirect to ActivityDashboard for field users
+                        Intent intent = new Intent(LoginActivity.this, ActivityDashboard.class);
+                        startActivity(intent);
+                    } else if (userType.equals("room_management")) {
+                        // Redirect to RoomManagementActivity for room management users
+                        Intent intent = new Intent(LoginActivity.this, RoomManagementActivity.class);
+                        startActivity(intent);
+                    } else {
+                        // Handle unexpected user types
+                        Toast.makeText(LoginActivity.this, "Invalid user type", Toast.LENGTH_SHORT).show();
+                    }
+
+                    finish(); // Close the login activity
                 } else {
                     // Display a toast message if the credentials are invalid
                     Toast.makeText(LoginActivity.this, "Invalid credentials", Toast.LENGTH_SHORT).show();
                 }
             }
         });
+
 
         // Set a click listener for the sign-up redirect TextView
         buttonSignupRedirect.setOnClickListener(new View.OnClickListener() {
@@ -203,9 +223,25 @@ public class LoginActivity extends AppCompatActivity {
 
     // Method to navigate to the main activity after successful login and Bluetooth check
     private void proceedToMainActivity() {
-        Intent intent = new Intent(LoginActivity.this, ActivityDashboard.class);
-        startActivity(intent);
-        Controller.PutData(LoginActivity.this,"logged","true");
-        finish();  // Close the login activity once the main activity starts
+        // Fetch the logged-in user ID and userType
+        String userId = Controller.GetData(LoginActivity.this, "uid");
+        User user = db.getUserById(Integer.parseInt(userId));
+        String userType = user.getUserType();
+
+        if (userType.equals("field")) {
+            // Redirect field users to ActivityDashboard
+            Intent intent = new Intent(LoginActivity.this, ActivityDashboard.class);
+            startActivity(intent);
+        } else if (userType.equals("room_management")) {
+            // Redirect room management users to RoomManagementActivity
+            Intent intent = new Intent(LoginActivity.this, RoomManagementActivity.class);
+            startActivity(intent);
+        } else {
+            // Handle unexpected user types
+            Toast.makeText(LoginActivity.this, "Invalid user type", Toast.LENGTH_SHORT).show();
+        }
+
+        finish(); // Close the login activity
     }
+
 }
