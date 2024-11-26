@@ -5,13 +5,21 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/searchViewConversations"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:queryHint="Search conversations" />
+
     <!-- RecyclerView to display conversations -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewConversations"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="8dp" />
-</LinearLayout>
 
+
+
+</LinearLayout>
 
 
